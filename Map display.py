@@ -15,7 +15,7 @@ print(address)
 def get_location(address):
     url = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + address
     # 'KaKaoAK '는 그대로 두고 개인키만 지우고 입력
-    headers = {"Authorization": "KakaoAK df71b417860af8f3e49dc377c8a00efe"}
+    headers = {"Authorization": "KakaoAK 여기에 KaKao API"}
 
     try:
         api_json = json.loads(requests.get(url, headers=headers).text)
