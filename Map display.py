@@ -3,18 +3,19 @@ import json
 import pandas as pd
 import folium
 
-# csv파일 불러오기
+# csv 파일 불러오기. encoding은 무조건 UTF-8
 csv = pd.read_csv('address.csv')
 print(csv)
 
-# 데이터프레임 주소값 추출
+# 데이터 프레임 주소 값 추출
 address = csv['주소']
 print(address)
 
-# 카카오맵 API 요청 및 지오코딩 함수 임포트
+# 카카오 맵 API 요청 및 지오 코딩 함수 임포트
 def get_location(address):
     url = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + address
-    # 'KaKaoAK '는 그대로 두고 개인키만 지우고 입력
+    # 'KaKaoAK '는 그대로 두고 "여기에 KaKao API"를 지우고 카카오 API 키 중 "REST API 키"를 입력
+    #  ex. headers = {"Authorization": "KakaoAK df71b417860af8f3e49dc377c8a00efe"}
     headers = {"Authorization": "KakaoAK 여기에 KaKao API"}
 
     try:
@@ -47,7 +48,8 @@ for i in address:
 csv['DCU ID'] = csv['DCU ID'].astype(str).str[:-2]
 
 # Dataframe 만들기
-address_df = pd.DataFrame({'DCU ID': csv['DCU ID'], '상세주소': csv['주소'], '위도': latitude, '경도': longitude})
+address_df = pd.DataFrame(
+    {'DCU ID': csv['DCU ID'], '상세주소': csv['주소'], '위도': latitude, '경도': longitude})
 
 # Dataframe 저장
 address_df.to_csv('address1.csv')
@@ -65,7 +67,8 @@ m = folium.Map(location=[36.5, 127.5], zoom_start=9)  # 대한민국 중심 좌�
 # 각 주소에 Marker 추가
 for i in range(len(address)):
     if latitude[i] is not None and longitude[i] is not None:
-        folium.Marker(location=[latitude[i], longitude[i]], popup=str(csv['DCU ID'][i])).add_to(m)
+        folium.Marker(location=[latitude[i], longitude[i]],
+                      popup=str(csv['DCU ID'][i])).add_to(m)
 
 # 지도 저장
 m.save('map.html')
