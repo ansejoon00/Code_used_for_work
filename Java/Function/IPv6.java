@@ -35,24 +35,24 @@ public class IPv6 {
     }
 
     // EX) "fd01:100:1:0:0:0:8745:1107" -> [0xfd, 0x01, 0x01, 0x00, ..., 0x87, 0x45, 0x11, 0x07]
-    protected static byte[] IPv6_String_to_Bytearray(String IPv6_String) {
-        byte[] IPv6_Bytes = new byte[16];
+    protected static byte[] IPv6_String_to_IPv6_Bytearray(String IPv6_String) {
+        byte[] IPv6_Bytearray = new byte[16];
         String[] parts = IPv6_String.split(":");
         for (int i = 0; i < parts.length; i++) {
             int value = Integer.parseInt(parts[i], 16);
-            IPv6_Bytes[i * 2] = (byte) (value >> 8);
-            IPv6_Bytes[i * 2 + 1] = (byte) value;
+            IPv6_Bytearray[i * 2] = (byte) (value >> 8);
+            IPv6_Bytearray[i * 2 + 1] = (byte) value;
         }
-        return IPv6_Bytes;
+        return IPv6_Bytearray;
     }
 
     // EX) [0xfd, 0x01, 0x01, 0x00, ..., 0x87, 0x45, 0x11, 0x07] -> "fd01:100:1::8745:1107"
-    protected static String IPv6_Bytearray_to_IPv6_String(byte[] IPv6_Bytes) {
+    protected static String IPv6_Bytearray_to_IPv6(byte[] IPv6_Bytearray) {
         try {
-            InetAddress inetAddress = InetAddress.getByAddress(IPv6_Bytes);
+            InetAddress inetAddress = InetAddress.getByAddress(IPv6_Bytearray);
             return inetAddress.getHostAddress().replaceAll(":(0:)+", "::").replaceAll(":::", "::");
         } catch (UnknownHostException e) {
-            throw new RuntimeException("Error converting bytes to IPv6", e);
+            throw new RuntimeException("[Error] IPv6_Bytearray_to_IPv6 Error", e);
         }
     }
 
@@ -62,17 +62,17 @@ public class IPv6 {
             InetAddress inetAddress = InetAddress.getByName(IPv6_String);
             return inetAddress.getHostAddress().replaceAll(":(0:)+", "::").replaceAll(":::", "::");
         } catch (UnknownHostException e) {
-            throw new RuntimeException("Error converting IPv6 String", e);
+            throw new RuntimeException("[Error] IPv6_String_to_IPv6 Error", e);
         }
     }
 
     // EX) [0xc0, 0xa8, 0x01, 0x01] -> "192.168.1.1"
-    protected static String IPv4_Bytearray_to_String(byte[] IPv4_Bytes) {
+    protected static String IPv4_Bytearray_to_IPv4_String(byte[] IPv4_Bytearray) {
         try {
-            InetAddress IPv4_Address = InetAddress.getByAddress(IPv4_Bytes);
+            InetAddress IPv4_Address = InetAddress.getByAddress(IPv4_Bytearray);
             return IPv4_Address.getHostAddress();
         } catch (UnknownHostException e) {
-            throw new RuntimeException("[Error] Function Error", e);
+            throw new RuntimeException("[Error] IPv4_Bytearray_to_IPv4_String Error", e);
         }
     }
 }
