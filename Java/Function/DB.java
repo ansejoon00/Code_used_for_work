@@ -3,6 +3,7 @@ import java.sql.*;
 public class DB {
     // DB Driver
     static String DB_DRIVER = "com.mysql.jdbc.Driver";
+    // static String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
     // DB IP:PORT/Database
     static String DB_URL = "jdbc:mysql://localhost:3306/";
     // DB ID
@@ -53,7 +54,7 @@ public class DB {
         }
     }
 
-    static protected void check_Table(String Database_Name, String Table_Name) {
+    protected static void check_Table(String Database_Name, String Table_Name) {
         check_Database(Database_Name);
 
         String check_Query = String.format("SHOW TABLES LIKE '%s'", Table_Name);
@@ -70,7 +71,7 @@ public class DB {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("[DB] Error Checking Table [" + Table_Name + "].");
+            System.err.println("[DB] Error Checking Table [" + Table_Name + "].");
             e.printStackTrace();
         }
     }
@@ -132,12 +133,12 @@ public class DB {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("[DB] An error occurred during check_And_Delete_Data_TwoColumns.");
+            System.err.println("[DB] An error occurred during check_And_Delete_Data_TwoColumns.");
             e.printStackTrace();
         }
     }
 
-    static protected void create_Table(String Table_Name) {
+    protected static void create_Table(String Table_Name) {
         String createTableSQL = "";
 
         switch (Table_Name) {
