@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Print_Packet {
     protected static void printf_byte(String label, byte array, int start_index, int size) {
         if (Server.Debug) {
@@ -38,51 +41,25 @@ public class Print_Packet {
         return LocalDateTime.now().format(formatter);
     }
 
-    protected static void printf_Send_cmd(char cmd, boolean result) {
+    protected static void printf_Packet(String type, Modem_INFO modem_info, char cmd, boolean result, byte[] packet) {
         String time = get_Formatted_Time();
         if (result) {
-            System.out.println("[Send Packet] Send Success CMD: " + cmd + " / Time : " + time);
+            System.out.println("[" + type + " Packet] " + type + " Success CMD: " + cmd + " / Time : " + time);
         } else {
             System.out.println("==================================================================================");
-            System.out.println("[Send Packet] Send CMD : " + cmd + " /  Time : " + time);
+            System.out.println("                                       " + type);
+            printf_modem_info(modem_info);
+            System.out.println("[" + type + " Packet] " + type + " CMD : " + cmd + " / Time : " + time);
+            System.out.println("[" + type + " Packet Data Size] : " + packet.length + " / Time : " + time);
+            printf_byte_s(type + " Packet Data", packet, 0, packet.length);
         }
     }
 
-    protected static void printf_Send_packet(byte[] packet) {
-        String time = get_Formatted_Time();
-        System.out.println("[Send Packet Data Size] : " + packet.length + " / Time : " + time);
-        printf_byte_s("Send Packet Data", packet, 0, packet.length);
-    }
-
-    protected static void printf_Trap_cmd(char cmd, boolean result) {
-        String time = get_Formatted_Time();
-        if (result) {
-            System.out.println("[Trap Packet] Trap Success CMD: " + cmd + " / Trap Time : " + time);
-        } else {
-            System.out.println("==================================================================================");
-            System.out.println("[Trap Packet] Trap CMD : " + cmd + " / Trap Time : " + time);
-        }
-    }
-
-    protected static void printf_Trap_packet(byte[] packet) {
-        String time = get_Formatted_Time();
-        System.out.println("[Trap Packet Data Size] : " + packet.length + " / Time : " + time);
-        printf_byte_s("Trap Packet Data", packet, 0, packet.length);
-    }
-
-    protected static void printf_Recv_cmd(char cmd, boolean result) {
-        String time = get_Formatted_Time();
-        if (result) {
-            System.out.println("[Recv Packet] Recv Success CMD: " + cmd + " / Recv Time : " + time);
-        } else {
-            System.out.println("==================================================================================");
-            System.out.println("[Recv Packet] Recv CMD : " + cmd + " / Recv Time : " + time);
-        }
-    }
-
-    protected static void printf_Recv_packet(byte[] packet) {
-        String time = get_Formatted_Time();
-        System.out.println("[Recv Packet Data Size] : " + packet.length + " / Time : " + time);
-        printf_byte_s("Recv Packet Data", packet, 0, packet.length);
+    protected static void printf_modem_info(Modem_INFO modem_info) {
+        System.out.println("[Modem INFO]");
+        System.out.println("  - DCU ID         : " + modem_info.DCU_ID);
+        System.out.println("  - Modem SysT     : " + Convert.hex_to_system_title(modem_info.modem_SysT));
+        System.out.println("  - Modem FEP Key  : " + modem_info.modem_Fep_Key);
+        System.out.println("  - Modem IP       : " + IPv6.IPv6_String_to_IPv6(modem_info.modem_IP));
     }
 }
