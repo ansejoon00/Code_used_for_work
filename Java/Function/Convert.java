@@ -161,8 +161,7 @@ public class Convert {
     // String test = "ABC123456789A";
     // >> { (byte) 0x41, (byte) 0x42, (byte) 0x43, (byte) 0x12, (byte) 0x34, (byte) 0x56, (byte) 0x78 (byte) 0x9A };
     protected static byte[] system_title_to_hex(String hexString) {
-        String result = hexByte_To_HexString(hexString.substring(0, 3).getBytes(StandardCharsets.US_ASCII), 3)
-                + hexString.substring(3, 13);
+        String result = hexByte_To_HexString(hexString.substring(0, 3).getBytes(StandardCharsets.US_ASCII), 3) + hexString.substring(3, 13);
 
         return hexString_To_ByteArray(result);
     }
