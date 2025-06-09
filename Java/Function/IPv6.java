@@ -23,10 +23,12 @@ public class IPv6 {
         String firstSegment = parts[parts.length - 2].replaceAll("[^0-9]", "").trim();
         String secondSegment = parts[parts.length - 1].replaceAll("[^0-9]", "").trim();
 
-        if (firstSegment.isEmpty())
+        if (firstSegment.isEmpty()) {
             firstSegment = "0";
-        if (secondSegment.isEmpty())
+        }
+        if (secondSegment.isEmpty()) {
             secondSegment = "0";
+        }
 
         String firstSegmentNumbers = String.format("%04d", Integer.parseInt(firstSegment));
         String secondSegmentNumbers = String.format("%04d", Integer.parseInt(secondSegment));
