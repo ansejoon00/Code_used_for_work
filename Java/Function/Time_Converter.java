@@ -29,7 +29,7 @@ public class Time_Converter {
         byte minute = HEXtoBCD(dateTime.getMinute());
         byte second = HEXtoBCD(dateTime.getSecond());
 
-        return new byte[] { year, month, day, week, hour, minute, second };
+        return new byte[]{year, month, day, week, hour, minute, second};
     }
 
     private static byte getWeekByte(DayOfWeek dayOfWeek) {
@@ -69,6 +69,40 @@ public class Time_Converter {
         int second = BCDtoHEX(forward_time[6]);
 
         return String.format("%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second);
+    }
+
+    protected static byte[] time_To_packetDLMSTime(String time) {
+        byte[] dlms = new byte[12];
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime forward_time = LocalDateTime.parse(time, formatter);
+
+            int year = forward_time.getYear();
+            int month = forward_time.getMonthValue();
+            int day = forward_time.getDayOfMonth();
+            int dayOfWeek = forward_time.getDayOfWeek().getValue();
+            int hour = forward_time.getHour();
+            int minute = forward_time.getMinute();
+            int second = forward_time.getSecond();
+
+            dlms[0] = (byte) ((year >> 8) & 0xFF);
+            dlms[1] = (byte) (year & 0xFF);
+            dlms[2] = (byte) month;
+            dlms[3] = (byte) day;
+            dlms[4] = (byte) dayOfWeek;
+            dlms[5] = (byte) hour;
+            dlms[6] = (byte) minute;
+            dlms[7] = (byte) second;
+
+            dlms[8] = (byte) 0xFF; // Hundredths of second (not used)
+            dlms[9] = (byte) 0xFF; // Deviation (UTC offset - not used)
+            dlms[10] = (byte) 0x00; // Clock status
+            dlms[11] = (byte) 0x00; // Reserved or extension
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dlms;
     }
 
     protected static void DLMSTime_To_Time(byte[] dlmstime, byte[] time) {
