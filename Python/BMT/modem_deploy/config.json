@@ -1,0 +1,16 @@
+{
+    "ssh": {
+        "port": 3110,
+        "user": "root",
+        "password": "WEG!X@yx@smgwD"
+    },
+    "ping": {
+        "interval": 5,
+        "timeout": 2
+    },
+    "retry": {
+        "interval": 10,
+        "ssh_attempts_per_round": 10,
+        "ssh_attempt_interval": 3
+    }
+}
