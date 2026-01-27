@@ -2,7 +2,7 @@
     "ssh": {
         "port": 3110,
         "user": "root",
-        "password": "WEG!X@yx@smgwD"
+        "password": ""
     },
     "ping": {
         "interval": 5,
@@ -12,5 +12,23 @@
         "interval": 10,
         "ssh_attempts_per_round": 10,
         "ssh_attempt_interval": 3
+    },
+    "notification": {
+        "enabled": true,
+        "notify_on": [
+            "start",
+            "ip_success",
+            "complete"
+        ],
+        "email": {
+            "enabled": true,
+            "smtp_server": "smtp.gmail.com",
+            "smtp_port": 587,
+            "sender_email": "asj87451107@gmail.com",
+            "sender_password": "omkkpmaclhpjtkua",
+            "recipient_emails": [
+                "sjan@gaias.co.kr"
+            ]
+        }
     }
 }
