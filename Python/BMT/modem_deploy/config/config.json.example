@@ -1,0 +1,34 @@
+{
+    "ssh": {
+        "port": 22,
+        "user": "root",
+        "password": ""
+    },
+    "ping": {
+        "interval": 5,
+        "timeout": 2
+    },
+    "retry": {
+        "interval": 10,
+        "ssh_attempts_per_round": 10,
+        "ssh_attempt_interval": 3
+    },
+    "notification": {
+        "enabled": true,
+        "notify_on": [
+            "start",
+            "ip_success",
+            "complete"
+        ],
+        "email": {
+            "enabled": true,
+            "smtp_server": "smtp.gmail.com",
+            "smtp_port": 587,
+            "sender_email": "your-email@gmail.com",
+            "sender_password": "",
+            "recipient_emails": [
+                "recipient@example.com"
+            ]
+        }
+    }
+}

@@ -1,0 +1,12 @@
+# File mapping (filename=remote_dir)
+# Format : filename=remote_directory
+# If no '=' is provided, default path is /usr/local/bin/
+# Lines starting with # are ignored
+# Empty lines are ignored
+# Local file must exist under ./file/ directory
+#
+# Example:
+# test=/usr/local/bin/
+# test_config=/usr/local/bin/
+#
+# Add your actual file mappings below (remove # from examples or add new ones):
